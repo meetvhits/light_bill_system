@@ -1,85 +1,3 @@
-{{-- @extends('layouts.master')
-@section('content')
-<div class="page-wrapper">
-    <div class="container-fluid">
-        <div class="row page-titles">
-            <div class="col-md-5 align-self-center">
-                <h4 class="text-themecolor">Light Bill</h4>
-            </div>
-            <div class="col-md-7 align-self-center text-end">
-                <div class="d-flex justify-content-end align-items-center">
-                    <ol class="breadcrumb justify-content-end">
-                        <li class="breadcrumb-item"><a href="{{ route('billcharge') }}">Light Bill</a></li>
-                        <li class="breadcrumb-item active">Show Light Bill</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            {{ session('status') }}
-                        </div>
-                        @elseif(session('fail'))
-                        <div class="alert alert-danger" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            {{ session('fail') }}
-                        </div>
-                        @endif
-                        <h4 class="card-title">Show Light Bill</h4>
-                        <div class="table-responsive m-t-40">
-                            <table
-                                class="display nowrap table table-hover table-striped border"
-                                cellspacing="0" width="100%">
-                                <tbody>
-                                    <tr>
-                                        <th>Customer</th>
-                                        <td>{{ $lightBill->customer->first_name }} {{ $lightBill->customer->last_name }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Service No</th>
-                                        <td>{{ $lightBill->customer->service_no }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Supply Type</th>
-                                        <td>{{ $lightBill->supply_type }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Reading Date</th>
-                                        <td>{{ $lightBill->reading_date }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Present Reading</th>
-                                        <td>{{ $lightBill->present_reading }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Past Reading</th>
-                                        <td>{{ $lightBill->past_reading }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Past Amount</th>
-                                        <td>{{ $lightBill->past_amount }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Amount</th>
-                                        <td>{{ $lightBill->total_amount }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection --}}
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -157,7 +75,7 @@
 
 <div class="container">
     <div class="header">
-        <img src="{{ asset('images/company-logo.png') }}" alt="Company Logo">
+        {{-- <img src="{{ asset('images/company-logo.png') }}" alt="Company Logo"> --}}
         <h2>Light Bill</h2>
         <p><strong>{{ $lightBill->customer->first_name }} {{ $lightBill->customer->last_name }}</strong></p>
         <p>Service No: {{ $lightBill->customer->service_no }}</p>
@@ -167,6 +85,7 @@
     <div class="bill-info">
         <p><strong>Supply Type:</strong> {{ $lightBill->supply_type }}</p>
         <p><strong>Reading Date:</strong> {{ \Carbon\Carbon::parse($lightBill->reading_date)->format('F j, Y') }}</p>
+        <button style="float: right; margin-top: -30px;" id="myPrntbtn" onclick="printMyPage()">Print this page</button>
     </div>
 
     <table class="table">
@@ -233,4 +152,17 @@
 </div>
 
 </body>
+<script type="text/javascript">
+
+    function printMyPage() {
+        //Get the print button
+        var printButton = document.getElementById("myPrntbtn");
+        //Hide the print button
+        printButton.style.visibility = 'hidden';
+        //Print the page content
+        window.print()
+        //Show back the print button on web page
+        printButton.style.visibility = 'visible';
+    }
+</script>
 </html>

@@ -33,6 +33,26 @@ class UnitRangeController extends Controller
         return redirect()->route('unitrange')->with('success', 'Unit Ranges created successfully.');
     }
 
+    public function storeOrUpdate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'units.*.start_range' => 'required|integer',
+            'units.*.end_range' => 'required|integer',
+            'units.*.price' => 'required|numeric',
+        ]);
+
+        foreach ($request->units as $unitData) {
+            if (isset($unitData['id'])) {
+                $unit = UnitRange::find($unitData['id']);
+                $unit->update($unitData);
+            } else {
+                UnitRange::create($unitData);
+            }
+        }
+
+        return redirect()->route('unitrange')->with('success', 'Unit range records saved successfully!');
+    }
+
     public function edit($id)
     {
         $unitRange = UnitRange::findOrFail($id);

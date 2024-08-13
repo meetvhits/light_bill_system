@@ -1,10 +1,7 @@
 @extends('layouts.master')
 @section('content')
-<!-- Page wrapper  -->
 <div class="page-wrapper">
-    <!-- Container fluid  -->
     <div class="container-fluid">
-        <!-- Bread crumb and right sidebar toggle -->
         <div class="row page-titles">
             <div class="col-md-5 align-self-center">
                 <h4 class="text-themecolor">Bill Charges</h4>
@@ -31,7 +28,6 @@
                         </div>
                         @endif
                         <h4 class="card-title">Bill Charge</h4>
-                        {{-- <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6> --}}
                         <div class="table-responsive m-t-40">
                             <table id="myTable"
                                 class="display nowrap table table-hover table-striped border"

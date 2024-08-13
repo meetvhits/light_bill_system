@@ -38,6 +38,7 @@ Route::group(['middleware' => 'weblogin'], function () {
 
     // UnitRange
     Route::get('unitrange', [UnitRangeController::class, 'index'])->name('unitrange');
+    Route::post('storeOrUpdate', [UnitRangeController::class, 'storeOrUpdate'])->name('storeOrUpdate');
     Route::get('addunitrange', [UnitRangeController::class, 'create'])->name('addunitrange');
     Route::post('storeunitrange', [UnitRangeController::class, 'store'])->name('storeunitrange');
     Route::get('editunitrange/{id}', [UnitRangeController::class, 'edit'])->name('editunitrange');
@@ -45,12 +46,12 @@ Route::group(['middleware' => 'weblogin'], function () {
     Route::get('deleteunitrange/{id}', [UnitRangeController::class, 'destroy'])->name('deleteunitrange');
 
     // BillCharge
-    Route::get('billcharge', [BillChargeController::class, 'index'])->name('billcharge');
-    Route::get('addbillcharge', [BillChargeController::class, 'create'])->name('addbillcharge');
-    Route::post('storebillcharge', [BillChargeController::class, 'store'])->name('storebillcharge');
-    Route::get('editbillcharge/{id}', [BillChargeController::class, 'edit'])->name('editbillcharge');
+    // Route::get('billcharge', [BillChargeController::class, 'index'])->name('billcharge');
+    // Route::get('addbillcharge', [BillChargeController::class, 'create'])->name('addbillcharge');
+    // Route::post('storebillcharge', [BillChargeController::class, 'store'])->name('storebillcharge');
+    Route::get('editbillcharge', [BillChargeController::class, 'edit'])->name('editbillcharge');
     Route::post('updatebillcharge/{id}', [BillChargeController::class, 'update'])->name('updatebillcharge');
-    Route::get('deletebillcharge/{id}', [BillChargeController::class, 'destroy'])->name('deletebillcharge');
+    // Route::get('deletebillcharge/{id}', [BillChargeController::class, 'destroy'])->name('deletebillcharge');
 
     // LightBill
      Route::get('lightbill', [LightBillController::class, 'index'])->name('lightbill');

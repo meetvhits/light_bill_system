@@ -9,7 +9,7 @@
             <div class="col-md-7 align-self-center text-end">
                 <div class="d-flex justify-content-end align-items-center">
                     <ol class="breadcrumb justify-content-end">
-                        <li class="breadcrumb-item"><a href="{{ route('billcharge') }}">Bill Charge</a></li>
+                        {{-- <li class="breadcrumb-item"><a href="{{ route('billcharge') }}">Bill Charge</a></li> --}}
                         <li class="breadcrumb-item active">Edit Bill Charge</li>
                     </ol>
                 </div>
@@ -43,7 +43,7 @@
                                 <input type="number" name="fixed_charge" id="fixed_charge" class="form-control" value="{{ $billCharge->fixed_charge }}"  required>
                             </div>
                             <button type="submit" class="btn btn-success">Update</button>
-                            <a class="btn btn-primary text-wite" href="{{ route('billcharge') }}">Back</a>
+                            {{-- <a class="btn btn-primary text-wite" href="{{ route('billcharge') }}">Back</a> --}}
                         </form>
                     </div>
                 </div>

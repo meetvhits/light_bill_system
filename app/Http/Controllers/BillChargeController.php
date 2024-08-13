@@ -7,32 +7,32 @@ use Illuminate\Http\Request;
 
 class BillChargeController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $billCharges = BillCharge::all();
+    //     return view('portal.billcharge.index', compact('billCharges'));
+    // }
+
+    // public function create()
+    // {
+    //     return view('portal.billcharge.create');
+    // }
+
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'govt_duty_percentage' => 'required|numeric|min:0|max:100',
+    //         'fixed_charge' => 'required|numeric|min:0',
+    //     ]);
+
+    //     BillCharge::create($request->all());
+
+    //     return redirect()->route('billcharge')->with('success', 'Bill Charge created successfully.');
+    // }
+
+    public function edit()
     {
-        $billCharges = BillCharge::all();
-        return view('portal.billcharge.index', compact('billCharges'));
-    }
-
-    public function create()
-    {
-        return view('portal.billcharge.create');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'govt_duty_percentage' => 'required|numeric|min:0|max:100',
-            'fixed_charge' => 'required|numeric|min:0',
-        ]);
-
-        BillCharge::create($request->all());
-
-        return redirect()->route('billcharge')->with('success', 'Bill Charge created successfully.');
-    }
-
-    public function edit($id)
-    {
-        $billCharge = BillCharge::findOrFail($id);
+        $billCharge = BillCharge::findOrFail(1);
         return view('portal.billcharge.edit', compact('billCharge'));
     }
 
@@ -46,14 +46,14 @@ class BillChargeController extends Controller
         $billCharge = BillCharge::findOrFail($id);
         $billCharge->update($request->all());
 
-        return redirect()->route('billcharge')->with('success', 'Bill Charge updated successfully.');
+        return redirect()->route('editbillcharge')->with('success', 'Bill Charge updated successfully.');
     }
 
-    public function destroy($id)
-    {
-        $billCharge = BillCharge::findOrFail($id);
-        $billCharge->delete();
+    // public function destroy($id)
+    // {
+    //     $billCharge = BillCharge::findOrFail($id);
+    //     $billCharge->delete();
 
-        return redirect()->route('billcharge')->with('success', 'Bill Charge deleted successfully.');
-    }
+    //     return redirect()->route('billcharge')->with('success', 'Bill Charge deleted successfully.');
+    // }
 }

@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="{{ route('billcharge') }}" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="{{ route('editbillcharge') }}" aria-expanded="false">
                             <span class="hide-menu">Bill Charge</span>
                         </a>
                     </li>
