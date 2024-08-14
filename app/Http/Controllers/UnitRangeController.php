@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UnitRangeRequest;
 use App\Models\UnitRange;
+use App\Repositories\UnitRangeRepository;
 use Illuminate\Http\Request;
 
 class UnitRangeController extends Controller
 {
+    protected $unitRangeRepository = "";
+
+    public function __construct(UnitRangeRepository $unitRangeRepository)
+    {
+        $this->unitRangeRepository = $unitRangeRepository;
+    }
+
     public function index()
     {
-        $unitRanges = UnitRange::all();
+        $unitRanges = $this->unitRangeRepository->getUnitRangeData();
+
         return view('portal.unitrange.index', compact('unitRanges'));
     }
 
@@ -18,66 +28,27 @@ class UnitRangeController extends Controller
         return view('portal.unitrange.create');
     }
 
-    public function store(Request $request)
+    public function storeOrUpdate(UnitRangeRequest $request)
     {
-        $request->validate([
-            'unit_ranges.*.start_range' => 'required|integer',
-            'unit_ranges.*.end_range' => 'required|integer',
-            'unit_ranges.*.price' => 'required|numeric',
-        ]);
+        $unitRangeDetails = $request->units;
+        try {
+            $this->unitRangeRepository->storeOrUpdateUnitRangeData($unitRangeDetails);
 
-        foreach ($request->unit_ranges as $range) {
-            UnitRange::create($range);
+            return redirect()->route('unitrange')->with('success', 'Unit range records saved successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('status', 'Something went wrong. Try again please..!!');
         }
 
-        return redirect()->route('unitrange')->with('success', 'Unit Ranges created successfully.');
-    }
-
-    public function storeOrUpdate(Request $request)
-    {
-        $validatedData = $request->validate([
-            'units.*.start_range' => 'required|integer',
-            'units.*.end_range' => 'required|integer',
-            'units.*.price' => 'required|numeric',
-        ]);
-
-        foreach ($request->units as $unitData) {
-            if (isset($unitData['id'])) {
-                $unit = UnitRange::find($unitData['id']);
-                $unit->update($unitData);
-            } else {
-                UnitRange::create($unitData);
-            }
-        }
-
-        return redirect()->route('unitrange')->with('success', 'Unit range records saved successfully!');
-    }
-
-    public function edit($id)
-    {
-        $unitRange = UnitRange::findOrFail($id);
-        return view('portal.unitrange.edit', compact('unitRange'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'start_range' => 'required|integer',
-            'end_range' => 'required|integer',
-            'price' => 'required|numeric',
-        ]);
-
-        $unitRange = UnitRange::findOrFail($id);
-        $unitRange->update($request->all());
-
-        return redirect()->route('unitrange')->with('success', 'Unit Range updated successfully.');
     }
 
     public function destroy($id)
     {
-        $unitRange = UnitRange::findOrFail($id);
-        $unitRange->delete();
+        try {
+            $this->unitRangeRepository->deleteUnitRange($id);
 
-        return redirect()->route('unitrange')->with('success', 'Unit Range deleted successfully.');
+            return redirect('unitrange')->with('status', 'Unit Range Delete Successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('unitrange')->with('status', 'Something went wrong. Try again please..!!');
+        }
     }
 }

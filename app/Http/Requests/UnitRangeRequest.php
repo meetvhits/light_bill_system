@@ -13,7 +13,7 @@ class UnitRangeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UnitRangeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'unit_ranges.*.start_range' => 'required|integer',
+            'unit_ranges.*.end_range' => 'required|integer',
+            'unit_ranges.*.price' => 'required|numeric',
         ];
     }
 }

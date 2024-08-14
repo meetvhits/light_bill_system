@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email_or_phone' => 'required|string',
+            'credentails' => 'required|string',
             'password' => 'required',
         ];
     }
@@ -32,7 +32,7 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         $messages = array(
-            'email_or_phone.required' => 'Please Enter Email Or Phone number',
+            'credentails.required' => 'Please Enter Email Or Phone number',
             'password.required' => 'Please Enter Password'
         );
         return $messages;

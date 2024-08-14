@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-7 align-self-center text-end">
                 <div class="d-flex justify-content-end align-items-center">
-                    <a type="button" href="{{ route('addcustomer') }}" class="btn btn-info d-none d-lg-block m-l-15 text-white"><i class="fa fa-plus-circle"></i> Create New</a>
+                    <a type="button" href="{{ route('customer.create') }}" class="btn btn-info d-none d-lg-block m-l-15 text-white"><i class="fa fa-plus-circle"></i> Create New</a>
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@
                                         <td>{{ $customer->address }}</td>
                                         <td>{{ $customer->created_at->format('d/m/Y') }}</td>
                                         <td>
-                                            <a href="{{ route('editcustomer', [$customer->id]) }}" title="Edit Customer" type="button" class="btn btn-icon btn-outline-primary">
+                                            <a href="{{ route('customer.edit', [$customer->id]) }}" title="Edit Customer" type="button" class="btn btn-icon btn-outline-primary">
                                                 <i class="feather icon-edit"></i> Edit
                                             </a>
                                             <a href="{{ route('deletecustomer', [$customer->id]) }}" title="Delete Customer" class="btn btn-icon btn-outline-primary" onclick="return confirm('Are you sure in delete Customer?')">

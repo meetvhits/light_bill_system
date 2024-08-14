@@ -9,7 +9,7 @@
             <div class="col-md-7 align-self-center text-end">
                 <div class="d-flex justify-content-end align-items-center">
                     <ol class="breadcrumb justify-content-end">
-                        <li class="breadcrumb-item"><a href="{{ route('customer') }}">Customer</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('customer.index') }}">Customer</a></li>
                         <li class="breadcrumb-item active">Edit Customer</li>
                     </ol>
                 </div>
@@ -33,8 +33,9 @@
                         @endif
                         <h4 class="card-title">Edit Customer</h4>
                         {{-- <h6 class="card-subtitle">Just add <code>form-material</code> class to the form that's it.</h6> --}}
-                        <form class="form-material m-t-40" method="POST" action="{{ route('updatecustomer',[$customer->id]) }}">
+                        <form class="form-material m-t-40" method="POST" action="{{ route('customer.update',[$customer->id]) }}">
                             @csrf
+                            {{ method_field('PUT') }}
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col">
@@ -97,7 +98,7 @@
                                     <i class="fa fa-check"></i>
                                     Update
                                 </button>
-                                <a class="btn btn-primary text-wite" href="{{ route('customer') }}">Back</a>
+                                <a class="btn btn-primary text-wite" href="{{ route('customer.index') }}">Back</a>
                             </div>
                         </form>
                     </div>

@@ -32,8 +32,9 @@
                         </div>
                         @endif
                         <h2>Edit Unit Range</h2>
-                        <form action="{{ route('updatebillcharge', $billCharge->id) }}" method="POST">
+                        <form action="{{ route('billcharge.update', $billCharge->id) }}" method="POST">
                             @csrf
+                            {{ method_field('PUT') }}
                             <div class="form-group">
                                 <label for="govt_duty_percentage">Government Duty (%)</label>
                                 <input type="number" name="govt_duty_percentage" id="govt_duty_percentage" class="form-control" value="{{ $billCharge->govt_duty_percentage }}"  required>

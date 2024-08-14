@@ -24,21 +24,22 @@
                         </a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="{{ route('customer') }}" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="{{ route('customer.index') }}" aria-expanded="false">
                             <span class="hide-menu">Customers</span>
                         </a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="{{ route('unitrange') }}" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="{{ route('unitrange.index') }}" aria-expanded="false">
                             <span class="hide-menu">Unit Range</span>
                         </a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-dark" href="{{ route('editbillcharge') }}" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="{{ route('billcharge.edit', [1]) }}" aria-expanded="false">
                             <span class="hide-menu">Bill Charge</span>
                         </a>
                     </li>
                     <li>
+                        {{-- <a class="waves-effect waves-dark" href="{{ route('lightbill.index') }}" aria-expanded="false"> --}}
                         <a class="waves-effect waves-dark" href="{{ route('lightbill') }}" aria-expanded="false">
                             <span class="hide-menu">Light Bill</span>
                         </a>

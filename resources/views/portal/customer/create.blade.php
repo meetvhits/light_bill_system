@@ -12,7 +12,7 @@
             <div class="col-md-7 align-self-center text-end">
                 <div class="d-flex justify-content-end align-items-center">
                     <ol class="breadcrumb justify-content-end">
-                        <li class="breadcrumb-item"><a href="{{ route('customer') }}">Customer</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('customer.index') }}">Customer</a></li>
                         <li class="breadcrumb-item active">Add Customer</li>
                     </ol>
                 </div>
@@ -23,7 +23,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form class="form-material" method="POST" action="{{ route('storecustomer') }}">
+                        <form class="form-material" method="POST" action="{{ route('customer.store') }}">
                             @csrf
                             <div class="form-group">
                                 <div class="row">
@@ -90,7 +90,7 @@
                                     <i class="fa fa-check"></i>
                                     Save
                                 </button>
-                                <a class="btn btn-primary text-wite" href="{{ route('customer') }}">Back</a>
+                                <a class="btn btn-primary text-wite" href="{{ route('customer.index') }}">Back</a>
                             </div>
                         </form>
                     </div>

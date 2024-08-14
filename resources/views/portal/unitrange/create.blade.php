@@ -12,7 +12,7 @@
             <div class="col-md-7 align-self-center text-end">
                 <div class="d-flex justify-content-end align-items-center">
                     <ol class="breadcrumb justify-content-end">
-                        <li class="breadcrumb-item"><a href="{{ route('unitrange') }}">Unit Range</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('unitrange.index') }}">Unit Range</a></li>
                         <li class="breadcrumb-item active">Add Unit Range</li>
                     </ol>
                 </div>

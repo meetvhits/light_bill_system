@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LightBillRequest;
+use App\Interfaces\LightBillRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\BillCharge;
 use App\Models\Customer;
@@ -10,9 +12,17 @@ use App\Models\UnitRange;
 
 class LightBillController extends Controller
 {
+    protected $lightBillRepository = "";
+
+    public function __construct(LightBillRepositoryInterface $lightBillRepository)
+    {
+        $this->lightBillRepository = $lightBillRepository;
+    }
+
     public function index()
     {
-        $lightBills = LightBill::with('customer')->get();
+        $lightBills = $this->lightBillRepository->getlightBillData();
+        // $lightBills = LightBill::with('customer')->get();
         return view('portal.lightbill.index', compact('lightBills'));
     }
 
@@ -22,7 +32,7 @@ class LightBillController extends Controller
         return view('portal.lightbill.create', compact('customers'));
     }
 
-    public function store(Request $request)
+    public function store(LightBillRequest $request)
     {
         $request->validate([
             'customer_id' => 'required',

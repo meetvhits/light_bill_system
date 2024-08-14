@@ -13,7 +13,7 @@ class LightBillRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,25 @@ class LightBillRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'customer_id' => 'required',
+            'supply_type' => 'required',
+            'reading_date' => 'required|date',
+            'present_reading' => 'required|integer',
+            'past_reading' => 'required|integer',
+            'past_amount' => 'required|numeric',
         ];
+    }
+
+    public function messages()
+    {
+        $messages = array(
+            'customer_id.required' => 'Please Enter Customer',
+            'supply_type.required' => 'Please Enter Supply Type',
+            'reading_date.required' => 'Please Enter Reading Date',
+            'present_reading.required' => 'Please Enter Present Reading Date',
+            'past_reading.required' => 'Please Enter Past Reading Date',
+            'past_amount.required' => 'Please Enter Past Amount'
+        );
+        return $messages;
     }
 }

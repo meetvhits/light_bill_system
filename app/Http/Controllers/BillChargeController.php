@@ -2,33 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BillChargeRequest;
 use App\Models\BillCharge;
-use Illuminate\Http\Request;
+use App\Repositories\BillChargeRepository;
 
 class BillChargeController extends Controller
 {
-    // public function index()
-    // {
-    //     $billCharges = BillCharge::all();
-    //     return view('portal.billcharge.index', compact('billCharges'));
-    // }
+    protected $billChargeRepository = "";
 
-    // public function create()
-    // {
-    //     return view('portal.billcharge.create');
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'govt_duty_percentage' => 'required|numeric|min:0|max:100',
-    //         'fixed_charge' => 'required|numeric|min:0',
-    //     ]);
-
-    //     BillCharge::create($request->all());
-
-    //     return redirect()->route('billcharge')->with('success', 'Bill Charge created successfully.');
-    // }
+    public function __construct(BillChargeRepository $billChargeRepository)
+    {
+        $this->billChargeRepository = $billChargeRepository;
+    }
 
     public function edit()
     {
@@ -36,24 +21,16 @@ class BillChargeController extends Controller
         return view('portal.billcharge.edit', compact('billCharge'));
     }
 
-    public function update(Request $request, $id)
+    public function update(BillChargeRequest $request)
     {
-        $request->validate([
-            'govt_duty_percentage' => 'required|numeric|min:0|max:100',
-            'fixed_charge' => 'required|numeric|min:0',
-        ]);
+        $billChargeDetails = $request->all();
+        try {
+            $this->billChargeRepository->updateBillCharge($billChargeDetails, 1);
 
-        $billCharge = BillCharge::findOrFail($id);
-        $billCharge->update($request->all());
+            return redirect()->route('billcharge.edit', [1])->with('success', 'Bill Charge Updated Successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('fail', 'Something went wrong. Try again please..!!');
+        }
 
-        return redirect()->route('editbillcharge')->with('success', 'Bill Charge updated successfully.');
     }
-
-    // public function destroy($id)
-    // {
-    //     $billCharge = BillCharge::findOrFail($id);
-    //     $billCharge->delete();
-
-    //     return redirect()->route('billcharge')->with('success', 'Bill Charge deleted successfully.');
-    // }
 }

@@ -26,26 +26,26 @@ class UserRepository implements UserRepositoryInterface
 
     public function createDemographicDetail($request)
     {
-        $userDemographicDetail = new UserDemographicDetail;
+        // $userDemographicDetail = new UserDemographicDetail;
 
-        $userDemographicDetail->user_id = $request->id;
-        $userDemographicDetail->gender = $request->gender;
-        $userDemographicDetail->date_of_birth = $request->date_of_birth;
-        $userDemographicDetail->educational_qualification = $request->educational_qualification;
-        $userDemographicDetail->occupation = $request->occupation;
-        $userDemographicDetail->nationality = $request->nationality;
-        $userDemographicDetail->state = $request->state;
-        $userDemographicDetail->marital_status = $request->marital_status;
-        $userDemographicDetail->dominant_hand = $request->dominant_hand;
-        $userDemographicDetail->smoking = ($request->smoking === 'Yes') ? UserDemographicDetail::YES : UserDemographicDetail::NO;
-        $userDemographicDetail->smoking_packs_per_week = $request->smoking_packs_per_week;
-        $userDemographicDetail->drinking_alcohol = ($request->drinking_alcohol === 'Yes') ?  UserDemographicDetail::YES  : UserDemographicDetail::NO;
-        $userDemographicDetail->drinking_times_per_month = $request->drinking_times_per_month;
-        $userDemographicDetail->intoxication = ($request->intoxication === 'Yes') ? UserDemographicDetail::YES  : UserDemographicDetail::NO;
-        $userDemographicDetail->substance_name = $request->substance_name;
-        $userDemographicDetail->intoxication_times_per_month = $request->intoxication_times_per_month;
+        // $userDemographicDetail->user_id = $request->id;
+        // $userDemographicDetail->gender = $request->gender;
+        // $userDemographicDetail->date_of_birth = $request->date_of_birth;
+        // $userDemographicDetail->educational_qualification = $request->educational_qualification;
+        // $userDemographicDetail->occupation = $request->occupation;
+        // $userDemographicDetail->nationality = $request->nationality;
+        // $userDemographicDetail->state = $request->state;
+        // $userDemographicDetail->marital_status = $request->marital_status;
+        // $userDemographicDetail->dominant_hand = $request->dominant_hand;
+        // $userDemographicDetail->smoking = ($request->smoking === 'Yes') ? UserDemographicDetail::YES : UserDemographicDetail::NO;
+        // $userDemographicDetail->smoking_packs_per_week = $request->smoking_packs_per_week;
+        // $userDemographicDetail->drinking_alcohol = ($request->drinking_alcohol === 'Yes') ?  UserDemographicDetail::YES  : UserDemographicDetail::NO;
+        // $userDemographicDetail->drinking_times_per_month = $request->drinking_times_per_month;
+        // $userDemographicDetail->intoxication = ($request->intoxication === 'Yes') ? UserDemographicDetail::YES  : UserDemographicDetail::NO;
+        // $userDemographicDetail->substance_name = $request->substance_name;
+        // $userDemographicDetail->intoxication_times_per_month = $request->intoxication_times_per_month;
 
-        $userDemographicDetail->save();
+        // $userDemographicDetail->save();
     }
 
     public function login($request)
@@ -55,15 +55,9 @@ class UserRepository implements UserRepositoryInterface
         $identifier = filter_var($field, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone_number';
         $request->merge([$identifier => $field]);
         if (Auth::attempt($request->only($identifier, 'password'))) {
-            // Auth::logoutOtherDevices($request->password);
-            Auth::user()->tokens()->delete();
-            $user = Auth::user();
-
-            $response['status'] = true;
-            $response['data'] = $user;
-            $response['msg'] = trans('messages.custom.login_messages');
+            return redirect('dashboard')->with('success', 'You Have Successfully Logged in.');
         } else {
-            $response['msg'] = trans('messages.custom.invalid_user');
+            return redirect()->back()->with('fail', 'You have entered an invalid email/phone or password.');
         }
         return $response;
     }

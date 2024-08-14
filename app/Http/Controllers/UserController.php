@@ -2,42 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function loginstore(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'credentails' => 'required',
-            'password' => 'required'
-        ],
-        [
-            'credentails.required' => 'Email or Phone Required',
-            'password.required' => 'Password Required'
-        ]);
+    protected $userRepository = "";
 
-        if ($validator->fails()) {
-            return redirect('/')
-                ->withErrors($validator)
-                ->withInput();
-        }
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+        // $this->middleware('auth');
+    }
 
-        $login = $request->credentails;
-        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+    public function loginstore(LoginRequest $request) {
 
-        $credentials = [
-            $field => $login,
-            'password' => $request->input('password'),
-        ];
+        try {
+            $login = $request->credentails;
+            $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
 
-        $auth = Auth::attempt($credentials);
+            $credentials = [
+                $field => $login,
+                'password' => $request->input('password'),
+            ];
 
-        if ($auth) {
-            return redirect('dashboard');
-        } else {
-            return redirect()->back()->with('fail', 'Email or Password is wrong.');
+            $auth = Auth::attempt($credentials);
+
+            if ($auth) {
+                return redirect('dashboard')->with('success', 'You Have Successfully Logged in.');
+            } else {
+                return redirect()->back()->with('fail', 'You have entered an invalid email/phone or password.');
+            }
+        } catch (\Exception $e) {
+            return $this->sendResponse(false, [], $e->getMessage());
         }
     }
 
