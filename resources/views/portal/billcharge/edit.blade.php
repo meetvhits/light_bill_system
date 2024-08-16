@@ -37,11 +37,11 @@
                             {{ method_field('PUT') }}
                             <div class="form-group">
                                 <label for="govt_duty_percentage">Government Duty (%)</label>
-                                <input type="number" name="govt_duty_percentage" id="govt_duty_percentage" class="form-control" value="{{ $billCharge->govt_duty_percentage }}"  required>
+                                <input type="text" name="govt_duty_percentage" id="govt_duty_percentage" class="form-control" value="{{ $billCharge->govt_duty_percentage }}" onkeypress="validateNumber(event)" onpaste="return false" required>
                             </div>
                             <div class="form-group">
                                 <label for="fixed_charge">Fixed Charge (Rs)</label>
-                                <input type="number" name="fixed_charge" id="fixed_charge" class="form-control" value="{{ $billCharge->fixed_charge }}"  required>
+                                <input type="text" name="fixed_charge" id="fixed_charge" class="form-control" value="{{ $billCharge->fixed_charge }}" onkeypress="validateNumber(event)" onpaste="return false" required>
                             </div>
                             <button type="submit" class="btn btn-success">Update</button>
                             {{-- <a class="btn btn-primary text-wite" href="{{ route('billcharge') }}">Back</a> --}}
@@ -52,4 +52,21 @@
         </div>
     </div>
 </div>
+<script>
+    function validateNumber(event) {
+        const key = event.key;
+        const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+
+        if (allowedKeys.includes(key)) {
+            return;
+        }
+
+        const regex = /^[0-9]*\.?[0-9]*$/;
+        const input = event.target.value + key;
+
+        if (!regex.test(input)) {
+            event.preventDefault();
+        }
+    }
+</script>
 @endsection

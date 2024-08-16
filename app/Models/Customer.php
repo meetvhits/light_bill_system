@@ -12,14 +12,7 @@ class Customer extends Model
 
     protected $table = 'customers';
 
-    /**
-    * The attributes that are mass assignable.
-    *
-    * @var array<int, string>
-    */
-    protected $fillable = [
-        'first_name', 'last_name', 'email', 'service_no', 'phone', 'gender', 'address', 'deleted_at'
-    ];
+    protected $guarded = ['id'];
 
     public function lightBills()
     {

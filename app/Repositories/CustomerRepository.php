@@ -10,20 +10,6 @@ use App\Models\Customer;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
-    public function login($request)
-    {
-        $response = ['status' => false, 'data' => []];
-        $field = $request->input('email_or_phone');
-        $identifier = filter_var($field, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone_number';
-        $request->merge([$identifier => $field]);
-        if (Auth::attempt($request->only($identifier, 'password'))) {
-            return redirect('dashboard')->with('success', 'You Have Successfully Logged in.');
-        } else {
-            return redirect()->back()->with('fail', 'You have entered an invalid email/phone or password.');
-        }
-        return $response;
-    }
-
     public function getCustomerData()
     {
         return Customer::where('deleted_at', '=', NULL)->get();

@@ -5,7 +5,7 @@ namespace App\Repositories;
 
 use App\Interfaces\LightBillRepositoryInterface;
 use App\Models\LightBill;
-
+use App\Models\UnitRange;
 
 class LightBillRepository implements LightBillRepositoryInterface
 {
@@ -14,40 +14,57 @@ class LightBillRepository implements LightBillRepositoryInterface
         return LightBill::with('customer')->get();
     }
 
-    public function storeCustomerData($customerDetails)
+    public function storelightBillData($lightBillData)
     {
-        $insertData = array(
-            'first_name' => $customerDetails['first_name'],
-            'last_name' => $customerDetails['last_name'],
-            'email' => $customerDetails['email'],
-            'phone' => $customerDetails['phone'],
-            'gender' => $customerDetails['gender'],
-            'address' => $customerDetails['address'],
-            'service_no' => $serviceNo,
-        );
+        $units_consumed = $lightBillData['present_reading'] - $lightBillData['past_reading'];
+        $unit_rate = UnitRange::where('start_range', '<=', $units_consumed)
+            ->where('end_range', '>=', $units_consumed)
+            ->first()->price ?? 0;
 
-        $customer = Customer::create($insertData);
-        return $customer;
+        $charges = getBillChargeList();
+
+        $govt_duty_charge = $charges->govt_duty_percentage / 100 * $units_consumed * $unit_rate;
+        $totalAmount = ($units_consumed * $unit_rate) + $charges->fixed_charge + $govt_duty_charge;
+
+        if ($lightBillData['past_amount']) {
+            $totalAmount = $totalAmount + $lightBillData['past_amount'];
+        }
+
+        $lightBill = LightBill::create($lightBillData + [
+            'base_rate' => $unit_rate,
+            'total_units' => $units_consumed,
+            'fixed_charge' => $charges->fixed_charge,
+            'govt_duty' => $charges->govt_duty_percentage,
+            'govt_duty_charge' => $govt_duty_charge,
+            'total_amount' => $totalAmount,
+        ]);
+
+        return $lightBill;
     }
 
-    public function updateCustomerData($customerDetails, $id)
+    public function updatelightBillData($lightBillData, $id)
     {
-        $updateData = array(
-            'first_name' => $customerDetails['first_name'],
-            'last_name' => $customerDetails['last_name'],
-            'email' => $customerDetails['email'],
-            'phone' => $customerDetails['phone'],
-            'gender' => $customerDetails['gender'],
-            'address' => $customerDetails['address'],
-        );
+        $lightBill = LightBill::findOrFail($id);
 
-        $updateCustomer = Customer::find($id);
-        $updateCustomer->update($updateData);
+        $units_consumed = $lightBillData['present_reading'] - $lightBillData['past_reading'];
+        $unit_rate = UnitRange::where('start_range', '<=', $units_consumed)
+            ->where('end_range', '>=', $units_consumed)
+            ->first()->price ?? 0;
 
-        return $updateCustomer;
+        $charges = getBillChargeList();
+
+        $totalAmount = ($units_consumed * $unit_rate) + $charges->fixed_charge + ($charges->govt_duty_percentage / 100 * $units_consumed * $unit_rate);
+
+        if ($lightBillData['past_amount']) {
+            $totalAmount = $totalAmount + $lightBillData['past_amount'];
+        }
+
+        $updateLightBill = $lightBill->update($lightBillData + ['total_amount' => $totalAmount]);
+
+        return $updateLightBill;
     }
-    public function deleteCustomer($id)
+    public function deleteLightBill($id)
     {
-        return Customer::where('id', $id)->delete();
+        return LightBill::where('id', $id)->delete();
     }
 }

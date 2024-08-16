@@ -33,10 +33,10 @@
                                 <tr>
                                     <td>
                                         <input type="hidden" name="units[{{ $loop->index }}][id]" value="{{ $unit->id }}">
-                                        <input type="text" name="units[{{ $loop->index }}][start_range]" class="form-control" value="{{ $unit->start_range }}" required>
+                                        <input type="text" name="units[{{ $loop->index }}][start_range]" class="form-control" value="{{ $unit->start_range }}" onkeypress="validateNumber(event)" onpaste="return false" required>
                                     </td>
-                                    <td><input type="text" name="units[{{ $loop->index }}][end_range]" class="form-control" value="{{ $unit->end_range }}" required></td>
-                                    <td><input type="number" step="0.01" name="units[{{ $loop->index }}][price]" class="form-control" value="{{ $unit->price }}" required></td>
+                                    <td><input type="text" name="units[{{ $loop->index }}][end_range]" class="form-control" onkeypress="validateNumber(event)" onpaste="return false" value="{{ $unit->end_range }}" required></td>
+                                    <td><input type="text" step="0.01" name="units[{{ $loop->index }}][price]" class="form-control" onkeypress="validateNumber(event)" onpaste="return false" value="{{ $unit->price }}" required></td>
                                     <td>
                                         <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this, {{ $unit->id }})">Delete</button>
                                     </td>
@@ -60,9 +60,9 @@
         let newRow = document.createElement('tr');
 
         newRow.innerHTML = `
-            <td><input type="number" name="units[${rowIndex}][start_range]" class="form-control" required></td>
-            <td><input type="number" name="units[${rowIndex}][end_range]" class="form-control" required></td>
-            <td><input type="number" step="0.01" name="units[${rowIndex}][price]" class="form-control" required></td>
+            <td><input type="text" name="units[${rowIndex}][start_range]" class="form-control" onkeypress="validateNumber(event)" onpaste="return false" required></td>
+            <td><input type="text" name="units[${rowIndex}][end_range]" class="form-control" onkeypress="validateNumber(event)" onpaste="return false" required></td>
+            <td><input type="text" step="0.01" name="units[${rowIndex}][price]" onkeypress="validateNumber(event)" onpaste="return false" class="form-control" required></td>
             <td>
                 <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this)">Delete</button>
             </td>
@@ -86,6 +86,22 @@
             }
         } else {
             button.closest('tr').remove();
+        }
+    }
+
+    function validateNumber(event) {
+        const key = event.key;
+        const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+
+        if (allowedKeys.includes(key)) {
+            return;
+        }
+
+        const regex = /^[0-9]*\.?[0-9]*$/;
+        const input = event.target.value + key;
+
+        if (!regex.test(input)) {
+            event.preventDefault();
         }
     }
 </script>

@@ -44,6 +44,7 @@ class CustomerController extends Controller
     }
 
     public function update(CustomerRequest $request, Customer $customer) {
+      
         $customerDetails = $request->all();
         try {
             $this->customerRepository->updateCustomerData($customerDetails, $customer->id);

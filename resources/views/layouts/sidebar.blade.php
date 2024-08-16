@@ -39,8 +39,7 @@
                         </a>
                     </li>
                     <li>
-                        {{-- <a class="waves-effect waves-dark" href="{{ route('lightbill.index') }}" aria-expanded="false"> --}}
-                        <a class="waves-effect waves-dark" href="{{ route('lightbill') }}" aria-expanded="false">
+                        <a class="waves-effect waves-dark" href="{{ route('lightbill.index') }}" aria-expanded="false">
                             <span class="hide-menu">Light Bill</span>
                         </a>
                     </li>

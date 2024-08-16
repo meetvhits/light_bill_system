@@ -9,8 +9,6 @@ class UnitRangeRepository implements UnitRangeRepositoryInterface
 {
     public function getUnitRangeData()
     {
-        // $paginate = config('constants.paginate');
-        // ->paginate($paginate)
         return UnitRange::where('deleted_at', '=', NULL)->get();
     }
 

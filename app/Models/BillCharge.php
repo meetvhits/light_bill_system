@@ -12,12 +12,5 @@ class BillCharge extends Model
 
     protected $table = 'bill_charges';
 
-    /**
-    * The attributes that are mass assignable.
-    *
-    * @var array<int, string>
-    */
-    protected $fillable = [
-        'govt_duty_percentage', 'fixed_charge', 'deleted_at'
-    ];
+    protected $guarded = ['id'];
 }

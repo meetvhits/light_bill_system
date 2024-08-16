@@ -4,13 +4,16 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\UserRepositoryInterface;
+use App\Interfaces\BillChargeRepositoryInterface;
 use App\Interfaces\CustomerRepositoryInterface;
 use App\Interfaces\LightBillRepositoryInterface;
+use App\Interfaces\UnitRangeRepositoryInterface;
 
-
+use App\Repositories\BillChargeRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\CustomerRepository;
 use App\Repositories\LightBillRepository;
+use App\Repositories\UnitRangeRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {

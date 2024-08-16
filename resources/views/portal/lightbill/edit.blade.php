@@ -9,7 +9,7 @@
             <div class="col-md-7 align-self-center text-end">
                 <div class="d-flex justify-content-end align-items-center">
                     <ol class="breadcrumb justify-content-end">
-                        <li class="breadcrumb-item"><a href="{{ route('billcharge') }}">Light Bill</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('lightbill.index') }}">Light Bill</a></li>
                         <li class="breadcrumb-item active">Edit Light Bill</li>
                     </ol>
                 </div>
@@ -32,8 +32,9 @@
                         </div>
                         @endif
                         <h2>Edit Light Bill</h2>
-                        <form action="{{ route('updatelightbill', $lightBill->id) }}" method="POST">
+                        <form action="{{ route('lightbill.update', [$lightBill->id]) }}" method="POST">
                             @csrf
+                            {{ method_field('PUT') }}
                             <div class="form-group">
                                 <label for="customer_id">Customer</label>
                                 <select name="customer_id" id="customer_id" class="form-control">
@@ -63,7 +64,7 @@
                                 <input type="number" name="past_amount" id="past_amount" class="form-control" value="{{ $lightBill->past_amount }}" step="0.01" required>
                             </div>
                             <button type="submit" class="btn btn-success">Update</button>
-                            <a class="btn btn-primary text-wite" href="{{ route('lightbill') }}">Back</a>
+                            <a class="btn btn-primary text-wite" href="{{ route('lightbill.index') }}">Back</a>
                         </form>
                     </div>
                 </div>

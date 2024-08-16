@@ -44,23 +44,11 @@ Route::group(['middleware' => 'weblogin'], function () {
     // BillCharge
     Route::controller(BillChargeController::class)->group(function () {
         Route::resource('billcharge', BillChargeController::class);
-        // Route::get('editbillcharge', [BillChargeController::class, 'edit'])->name('editbillcharge');
-        // Route::post('updatebillcharge/{id}', [BillChargeController::class, 'update'])->name('updatebillcharge');
     });
-    // Route::get('billcharge', [BillChargeController::class, 'index'])->name('billcharge');
-    // Route::get('addbillcharge', [BillChargeController::class, 'create'])->name('addbillcharge');
-    // Route::post('storebillcharge', [BillChargeController::class, 'store'])->name('storebillcharge');
-    // Route::get('editbillcharge', [BillChargeController::class, 'edit'])->name('editbillcharge');
-    // Route::post('updatebillcharge/{id}', [BillChargeController::class, 'update'])->name('updatebillcharge');
-    // Route::get('deletebillcharge/{id}', [BillChargeController::class, 'destroy'])->name('deletebillcharge');
 
     // LightBill
-     Route::get('lightbill', [LightBillController::class, 'index'])->name('lightbill');
-     Route::get('showlightbill/{id}', [LightBillController::class, 'show'])->name('showlightbill');
-     Route::get('addlightbill', [LightBillController::class, 'create'])->name('addlightbill');
-     Route::post('storelightbill', [LightBillController::class, 'store'])->name('storelightbill');
-     Route::get('editlightbill/{id}', [LightBillController::class, 'edit'])->name('editlightbill');
-     Route::post('updatelightbill/{id}', [LightBillController::class, 'update'])->name('updatelightbill');
-     Route::get('deletelightbill/{id}', [LightBillController::class, 'destroy'])->name('deletelightbill');
+    Route::controller(LightBillController::class)->group(function () {
+        Route::resource('lightbill', LightBillController::class);
+        Route::get('deletelightbill/{id}', [LightBillController::class, 'destroy'])->name('deletelightbill');
+    });
 });
-// portal.dashborad

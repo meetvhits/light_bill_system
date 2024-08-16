@@ -12,12 +12,5 @@ class UnitRange extends Model
 
     protected $table = 'unit_ranges';
 
-    /**
-    * The attributes that are mass assignable.
-    *
-    * @var array<int, string>
-    */
-    protected $fillable = [
-        'start_range', 'end_range', 'price', 'deleted_at'
-    ];
+    protected $guarded = ['id'];
 }

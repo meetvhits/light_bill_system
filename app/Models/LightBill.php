@@ -12,14 +12,7 @@ class LightBill extends Model
 
     protected $table = 'light_bills';
 
-    /**
-    * The attributes that are mass assignable.
-    *
-    * @var array<int, string>
-    */
-    protected $fillable = [
-        'customer_id', 'supply_type', 'reading_date', 'present_reading', 'past_reading', 'past_amount', 'base_rate', 'total_units', 'govt_duty', 'govt_duty_charge', 'fixed_charge', 'total_amount', 'deleted_at'
-    ];
+    protected $guarded = ['id'];
 
     public function customer()
     {

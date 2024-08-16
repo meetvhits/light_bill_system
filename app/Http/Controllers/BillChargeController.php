@@ -31,6 +31,5 @@ class BillChargeController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('fail', 'Something went wrong. Try again please..!!');
         }
-
     }
 }
